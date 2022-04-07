@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: instana-ssh-service 
+  namespace: openshift-virtualization-virtual-machines
+  annotations:
+      argocd.argoproj.io/sync-wave: "460"
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - port: 22000
+      targetPort: 22
+      protocol: TCP
+  selector:
+    kubevirt.io/domain: instana-vm
+    vm.kubevirt.io/name: instana-vm
+  type: NodePort
